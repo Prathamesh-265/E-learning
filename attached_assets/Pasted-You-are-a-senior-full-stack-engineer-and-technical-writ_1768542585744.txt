@@ -1,0 +1,232 @@
+You are a senior full-stack engineer and technical writer.
+Build and explain a complete portfolio-ready full-stack project based strictly on the following requirements:
+
+Project Name:
+
+E-Learning Platform (Intermediate → Advanced)
+
+Tech Stack (must follow exactly):
+
+Frontend: React (Vite) + React Router
+
+Styling: Tailwind CSS (preferred) OR CSS Modules
+
+Backend: Node.js + Express
+
+Database: MongoDB Atlas
+
+Auth: JWT (access token + optional refresh)
+
+Deployment: Frontend → Vercel, Backend → Render, DB → MongoDB Atlas
+
+Testing: basic Jest + React Testing Library (minimum 1 component test)
+
+1) Features to implement (must-haves)
+Public Features:
+
+Landing page (marketing copy)
+
+Course listing page with filters: category, difficulty, price
+
+Course detail page: overview, syllabus, instructor
+
+User Features:
+
+Signup/Login (JWT)
+
+User Dashboard: enrolled courses + progress tracking (lessons completed)
+
+Enroll in course (POST enrollment)
+
+View modules/lessons (simple content pages)
+
+Admin Features:
+
+Admin-only panel
+
+CRUD Courses: Create/Edit/Delete courses (protected routes)
+
+View user list + enrollments
+
+Backend/API Features:
+
+Auth Routes
+
+Course CRUD endpoints
+
+Enrollment endpoints
+
+Progress tracking endpoints
+
+2) Required Data Models (MongoDB)
+
+Implement these schemas:
+
+User
+
+{
+_id,
+name,
+email,
+passwordHash,
+role: 'user' | 'admin',
+createdAt
+}
+
+Course
+
+{
+_id,
+title,
+slug,
+description,
+price,
+category,
+difficulty,
+thumbnailUrl,
+lessons: [
+{ title, contentHtml, videoUrl?, order }
+],
+createdAt
+}
+
+Enrollment
+
+{
+_id,
+userId,
+courseId,
+progress: { lessonId: Boolean },
+enrolledAt
+}
+
+Optional: Review { userId, courseId, rating, comment }
+
+3) Required API Endpoints
+
+Implement these routes exactly:
+
+Auth
+
+POST /api/auth/signup
+
+POST /api/auth/login (returns JWT)
+
+GET /api/auth/me (protected)
+
+Courses
+
+GET /api/courses (supports query: ?category=&search=)
+
+GET /api/courses/:id
+
+POST /api/courses (admin only)
+
+PUT /api/courses/:id (admin only)
+
+DELETE /api/courses/:id (admin only)
+
+Enrollments
+
+POST /api/enroll
+
+GET /api/enrollments/me
+
+PUT /api/enrollments/:id/progress
+
+Admin
+
+GET /api/users (admin only)
+
+GET /api/reports (optional simple metrics)
+
+4) Required Frontend Routes
+
+Create these pages/routes exactly:
+
+/ Landing
+
+/courses Course Listing
+
+/courses/:slug Course Detail
+
+/login, /signup
+
+/dashboard User dashboard (protected)
+
+/admin Admin panel (protected + admin only)
+
+5) Component Requirements
+
+Create components:
+Header, Footer, CourseCard, CourseList, CourseDetail, LessonPlayer,
+AuthForm, Dashboard, AdminPanel, PrivateRoute/AuthGuard,
+Pagination, FilterBar, EnrollmentButton
+
+6) Security & Best Practices
+
+Must include:
+
+bcrypt password hashing
+
+JWT expiry
+
+store token in httpOnly cookie OR localStorage (mention tradeoff; httpOnly recommended)
+
+role-based middleware
+
+server-side validation + basic client-side validation
+
+.env usage and env.example
+
+7) Deliverables
+
+Output MUST include:
+
+Full folder structure (frontend/ backend/)
+
+All source code for frontend and backend
+
+README with:
+
+features
+
+setup steps
+
+env variables
+
+scripts
+
+deployment steps
+
+Postman endpoint list for testing
+
+Clear explanation:
+
+how the app works end-to-end
+
+how auth flows work
+
+how enroll + progress work
+
+how admin CRUD works
+
+Minimal test setup:
+
+1 React Testing Library test
+
+optional supertest API test
+
+8) Output Style Rules
+
+Provide code in complete files with filenames.
+
+Keep code clean, modular, and production-grade.
+
+Use consistent naming.
+
+Add comments only where needed.
+
+Explain project like an interview-ready explanation.
+
+Now generate the complete project.
