@@ -187,42 +187,19 @@ export async function registerRoutes(
     res.json(stats);
   });
 
-  // Seed Data if needed
   await seedDatabase();
 
   return httpServer;
 }
 
 async function seedDatabase() {
-  const usersList = await storage.getAllUsers();
-  if (usersList.length === 0) {
-    // Create Admin
-    const hashedPassword = await bcrypt.hash("admin123", 10);
-    await storage.createUser({
-      name: "Admin User",
-      email: "admin@example.com",
-      password: hashedPassword,
-      role: "admin"
-    });
-
+  const coursesCount = await storage.getCourses();
+  if (coursesCount.length <= 1) {
     // Create Demo Courses
-    await storage.createCourse({
-      title: "Full Stack React & Node",
-      slug: "full-stack-react-node",
-      description: "Learn to build modern web applications from scratch.",
-      price: "49.99",
-      category: "Development",
-      difficulty: "Intermediate",
-      thumbnailUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80"
-    }, [
-      { title: "Introduction", contentHtml: "<p>Welcome to the course!</p>", videoUrl: null, order: 1 },
-      { title: "Setup", contentHtml: "<p>Let's install Node.js</p>", videoUrl: null, order: 2 }
-    ]);
-
     await storage.createCourse({
       title: "Advanced TypeScript Patterns",
       slug: "advanced-typescript",
-      description: "Master generic types, utility types, and advanced architectural patterns.",
+      description: "Master generic types, utility types, and advanced architectural patterns for large-scale applications.",
       price: "79.99",
       category: "Development",
       difficulty: "Advanced",
@@ -235,7 +212,7 @@ async function seedDatabase() {
     await storage.createCourse({
       title: "UI/UX Design Fundamentals",
       slug: "ui-ux-fundamentals",
-      description: "The essential guide to modern interface design and user experience.",
+      description: "The essential guide to modern interface design, accessibility, and user experience.",
       price: "39.99",
       category: "Design",
       difficulty: "Beginner",
@@ -248,7 +225,7 @@ async function seedDatabase() {
     await storage.createCourse({
       title: "Mastering Tailwind CSS",
       slug: "mastering-tailwind",
-      description: "Build beautiful, responsive layouts at lightning speed with Tailwind.",
+      description: "Build beautiful, responsive layouts at lightning speed with utility-first CSS.",
       price: "29.99",
       category: "Design",
       difficulty: "Intermediate",
