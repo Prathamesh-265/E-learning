@@ -93,7 +93,9 @@ export const insertEnrollmentSchema = createInsertSchema(enrollments).omit({ id:
 // === EXPLICIT TYPES ===
 
 export type User = typeof users.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;
 export type Course = typeof courses.$inferSelect;
+export type InsertCourse = z.infer<typeof insertCourseSchema>;
 export type Lesson = typeof lessons.$inferSelect;
 export type Enrollment = typeof enrollments.$inferSelect;
 

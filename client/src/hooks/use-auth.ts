@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api, type LoginRequest } from "@shared/routes";
-import { insertUserSchema, type User, type InsertUser } from "@shared/schema";
+import { api } from "@shared/routes";
+import { insertUserSchema, type User, type InsertUser, type LoginRequest } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 

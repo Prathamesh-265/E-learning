@@ -215,8 +215,8 @@ async function seedDatabase() {
       difficulty: "Intermediate",
       thumbnailUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80"
     }, [
-      { title: "Introduction", contentHtml: "<p>Welcome to the course!</p>", order: 1 },
-      { title: "Setup", contentHtml: "<p>Let's install Node.js</p>", order: 2 }
+      { title: "Introduction", contentHtml: "<p>Welcome to the course!</p>", videoUrl: null, order: 1 },
+      { title: "Setup", contentHtml: "<p>Let's install Node.js</p>", videoUrl: null, order: 2 }
     ]);
 
     await storage.createCourse({
@@ -228,8 +228,8 @@ async function seedDatabase() {
       difficulty: "Advanced",
       thumbnailUrl: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80"
     }, [
-      { title: "Generics Deep Dive", contentHtml: "<p>Understanding generic constraints and defaults.</p>", order: 1 },
-      { title: "Conditional Types", contentHtml: "<p>Creating dynamic types based on inputs.</p>", order: 2 }
+      { title: "Generics Deep Dive", contentHtml: "<p>Understanding generic constraints and defaults.</p>", videoUrl: null, order: 1 },
+      { title: "Conditional Types", contentHtml: "<p>Creating dynamic types based on inputs.</p>", videoUrl: null, order: 2 }
     ]);
 
     await storage.createCourse({
@@ -241,8 +241,8 @@ async function seedDatabase() {
       difficulty: "Beginner",
       thumbnailUrl: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?w=800&q=80"
     }, [
-      { title: "Visual Hierarchy", contentHtml: "<p>Guiding the user's eye with color and spacing.</p>", order: 1 },
-      { title: "Typography", contentHtml: "<p>Choosing and pairing fonts effectively.</p>", order: 2 }
+      { title: "Visual Hierarchy", contentHtml: "<p>Guiding the user's eye with color and spacing.</p>", videoUrl: null, order: 1 },
+      { title: "Typography", contentHtml: "<p>Choosing and pairing fonts effectively.</p>", videoUrl: null, order: 2 }
     ]);
 
     await storage.createCourse({
@@ -254,8 +254,8 @@ async function seedDatabase() {
       difficulty: "Intermediate",
       thumbnailUrl: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&q=80"
     }, [
-      { title: "Utility First Concept", contentHtml: "<p>Why utility classes beat traditional CSS.</p>", order: 1 },
-      { title: "Responsive Design", contentHtml: "<p>Building layouts for every screen size.</p>", order: 2 }
+      { title: "Utility First Concept", contentHtml: "<p>Why utility classes beat traditional CSS.</p>", videoUrl: null, order: 1 },
+      { title: "Responsive Design", contentHtml: "<p>Building layouts for every screen size.</p>", videoUrl: null, order: 2 }
     ]);
   }
 }

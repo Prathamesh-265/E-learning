@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Loader2, Award, Clock, BookOpen } from "lucide-react";
 import { Link } from "wouter";
+import type { CourseWithLessons } from "@shared/schema";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -22,7 +23,8 @@ export default function Dashboard() {
   const totalCourses = enrollments?.length || 0;
   const completedCourses = enrollments?.filter(e => {
     // Basic check - if all lessons complete (simplified logic)
-    const totalLessons = e.course.lessons?.length || 0; // Ideally backend sends this count
+    const course = e.course as CourseWithLessons;
+    const totalLessons = course.lessons?.length || 0;
     const completedLessons = Object.values(e.progress || {}).filter(Boolean).length;
     return totalLessons > 0 && completedLessons === totalLessons;
   }).length || 0;
@@ -40,7 +42,7 @@ export default function Dashboard() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 gap-1">
               <CardTitle className="text-sm font-medium">Enrolled Courses</CardTitle>
               <BookOpen className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
@@ -50,7 +52,7 @@ export default function Dashboard() {
           </Card>
           
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 gap-1">
               <CardTitle className="text-sm font-medium">Completed</CardTitle>
               <Award className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
@@ -60,7 +62,7 @@ export default function Dashboard() {
           </Card>
           
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 gap-1">
               <CardTitle className="text-sm font-medium">Hours Learned</CardTitle>
               <Clock className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
@@ -86,21 +88,22 @@ export default function Dashboard() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {enrollments?.map((enrollment) => {
               // Calculate progress percentage
+              const course = enrollment.course as CourseWithLessons;
               const progressMap = enrollment.progress || {};
               const completedCount = Object.values(progressMap).filter(Boolean).length;
-              const totalLessons = enrollment.course.lessons?.length || 1; // Avoid div by zero
+              const totalLessons = course.lessons?.length || 1; // Avoid div by zero
               const percent = Math.round((completedCount / totalLessons) * 100);
 
               return (
                 <div key={enrollment.id} className="flex flex-col h-full">
-                  <CourseCard course={enrollment.course} />
+                  <CourseCard course={course} />
                   <div className="mt-[-1rem] mx-4 relative z-10 bg-card p-4 rounded-b-xl border-x border-b shadow-sm pt-6">
                     <div className="flex justify-between text-xs font-medium mb-2">
                       <span>{percent}% Complete</span>
                       <span>{completedCount}/{totalLessons} Lessons</span>
                     </div>
                     <Progress value={percent} className="h-2" />
-                    <Link href={`/courses/${enrollment.course.slug}`} className="block mt-4">
+                    <Link href={`/courses/${course.slug}`} className="block mt-4">
                       <button className="w-full py-2 text-sm font-medium text-primary hover:bg-primary/5 rounded-md transition-colors">
                         Continue Learning
                       </button>
