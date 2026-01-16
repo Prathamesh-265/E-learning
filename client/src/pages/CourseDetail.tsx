@@ -172,9 +172,9 @@ export default function CourseDetail() {
               
               <CardContent className="p-6">
                 <div className="text-3xl font-bold mb-6 flex items-baseline gap-2">
-                  ${Number(course.price).toFixed(2)}
+                  ₹{Number(course.price).toLocaleString('en-IN')}
                   <span className="text-base font-normal text-muted-foreground line-through">
-                    ${(Number(course.price) * 1.5).toFixed(2)}
+                    ₹{(Number(course.price) * 1.5).toLocaleString('en-IN')}
                   </span>
                 </div>
                 

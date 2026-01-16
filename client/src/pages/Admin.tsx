@@ -124,7 +124,7 @@ export default function Admin() {
                         <TableRow key={course.id}>
                           <TableCell className="font-medium">{course.title}</TableCell>
                           <TableCell>{course.category}</TableCell>
-                          <TableCell>${Number(course.price).toFixed(2)}</TableCell>
+                          <TableCell>₹{Number(course.price).toLocaleString('en-IN')}</TableCell>
                           <TableCell>{course.lessons?.length || 0}</TableCell>
                           <TableCell className="text-right">
                             <Button 
@@ -275,7 +275,7 @@ function CreateCourseDialog() {
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Price ($)</FormLabel>
+                    <FormLabel>Price (₹)</FormLabel>
                     <FormControl>
                       <Input type="number" step="0.01" {...field} />
                     </FormControl>

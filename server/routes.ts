@@ -200,7 +200,7 @@ async function seedDatabase() {
       title: "Advanced TypeScript Patterns",
       slug: "advanced-typescript",
       description: "Master generic types, utility types, and advanced architectural patterns for large-scale applications.",
-      price: "79.99",
+      price: "6499",
       category: "Development",
       difficulty: "Advanced",
       thumbnailUrl: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80"
@@ -213,7 +213,7 @@ async function seedDatabase() {
       title: "UI/UX Design Fundamentals",
       slug: "ui-ux-fundamentals",
       description: "The essential guide to modern interface design, accessibility, and user experience.",
-      price: "39.99",
+      price: "3299",
       category: "Design",
       difficulty: "Beginner",
       thumbnailUrl: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?w=800&q=80"
@@ -226,7 +226,7 @@ async function seedDatabase() {
       title: "Mastering Tailwind CSS",
       slug: "mastering-tailwind",
       description: "Build beautiful, responsive layouts at lightning speed with utility-first CSS.",
-      price: "29.99",
+      price: "2499",
       category: "Design",
       difficulty: "Intermediate",
       thumbnailUrl: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&q=80"
