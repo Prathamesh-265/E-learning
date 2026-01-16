@@ -93,12 +93,16 @@ export async function registerRoutes(
   });
 
   app.get(api.auth.me.path, authenticateToken, async (req, res) => {
-    const userId = (req as any).user.id;
-    const user = await storage.getUser(userId);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    
-    const { password, ...userWithoutPassword } = user;
-    res.json(userWithoutPassword);
+    try {
+      const userId = (req as any).user.id;
+      const user = await storage.getUser(userId);
+      if (!user) return res.status(404).json({ message: "User not found" });
+      
+      const { password, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
+    } catch (err) {
+      res.status(500).json({ message: "Internal server error" });
+    }
   });
 
   // === COURSES ROUTES ===
@@ -190,8 +194,8 @@ export async function registerRoutes(
 }
 
 async function seedDatabase() {
-  const users = await storage.getAllUsers();
-  if (users.length === 0) {
+  const usersList = await storage.getAllUsers();
+  if (usersList.length === 0) {
     // Create Admin
     const hashedPassword = await bcrypt.hash("admin123", 10);
     await storage.createUser({
@@ -201,7 +205,7 @@ async function seedDatabase() {
       role: "admin"
     });
 
-    // Create Demo Course
+    // Create Demo Courses
     await storage.createCourse({
       title: "Full Stack React & Node",
       slug: "full-stack-react-node",
@@ -213,6 +217,45 @@ async function seedDatabase() {
     }, [
       { title: "Introduction", contentHtml: "<p>Welcome to the course!</p>", order: 1 },
       { title: "Setup", contentHtml: "<p>Let's install Node.js</p>", order: 2 }
+    ]);
+
+    await storage.createCourse({
+      title: "Advanced TypeScript Patterns",
+      slug: "advanced-typescript",
+      description: "Master generic types, utility types, and advanced architectural patterns.",
+      price: "79.99",
+      category: "Development",
+      difficulty: "Advanced",
+      thumbnailUrl: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80"
+    }, [
+      { title: "Generics Deep Dive", contentHtml: "<p>Understanding generic constraints and defaults.</p>", order: 1 },
+      { title: "Conditional Types", contentHtml: "<p>Creating dynamic types based on inputs.</p>", order: 2 }
+    ]);
+
+    await storage.createCourse({
+      title: "UI/UX Design Fundamentals",
+      slug: "ui-ux-fundamentals",
+      description: "The essential guide to modern interface design and user experience.",
+      price: "39.99",
+      category: "Design",
+      difficulty: "Beginner",
+      thumbnailUrl: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?w=800&q=80"
+    }, [
+      { title: "Visual Hierarchy", contentHtml: "<p>Guiding the user's eye with color and spacing.</p>", order: 1 },
+      { title: "Typography", contentHtml: "<p>Choosing and pairing fonts effectively.</p>", order: 2 }
+    ]);
+
+    await storage.createCourse({
+      title: "Mastering Tailwind CSS",
+      slug: "mastering-tailwind",
+      description: "Build beautiful, responsive layouts at lightning speed with Tailwind.",
+      price: "29.99",
+      category: "Design",
+      difficulty: "Intermediate",
+      thumbnailUrl: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&q=80"
+    }, [
+      { title: "Utility First Concept", contentHtml: "<p>Why utility classes beat traditional CSS.</p>", order: 1 },
+      { title: "Responsive Design", contentHtml: "<p>Building layouts for every screen size.</p>", order: 2 }
     ]);
   }
 }
