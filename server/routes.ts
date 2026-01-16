@@ -195,7 +195,38 @@ export async function registerRoutes(
 async function seedDatabase() {
   const coursesCount = await storage.getCourses();
   if (coursesCount.length <= 1) {
-    // Create Demo Courses
+    // Re-seed all courses if only the initial one exists or if we need to update
+    // First, let's clear existing demo course to ensure all are updated
+    if (coursesCount.length === 1) {
+      await storage.deleteCourse(coursesCount[0].id);
+    }
+
+    // Create Admin if not exists
+    const usersList = await storage.getAllUsers();
+    if (usersList.length === 0) {
+      const hashedPassword = await bcrypt.hash("admin123", 10);
+      await storage.createUser({
+        name: "Admin User",
+        email: "admin@example.com",
+        password: hashedPassword,
+        role: "admin"
+      });
+    }
+
+    // Create Demo Courses with updated pricing
+    await storage.createCourse({
+      title: "Full Stack React & Node",
+      slug: "full-stack-react-node",
+      description: "Learn to build modern web applications from scratch.",
+      price: "15999",
+      category: "Development",
+      difficulty: "Intermediate",
+      thumbnailUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80"
+    }, [
+      { title: "Introduction", contentHtml: "<p>Welcome to the course!</p>", videoUrl: null, order: 1 },
+      { title: "Setup", contentHtml: "<p>Let's install Node.js</p>", videoUrl: null, order: 2 }
+    ]);
+
     await storage.createCourse({
       title: "Advanced TypeScript Patterns",
       slug: "advanced-typescript",

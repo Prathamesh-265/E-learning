@@ -124,7 +124,7 @@ export default function Admin() {
                         <TableRow key={course.id}>
                           <TableCell className="font-medium">{course.title}</TableCell>
                           <TableCell>{course.category}</TableCell>
-                          <TableCell>₹{Number(course.price).toLocaleString('en-IN')}</TableCell>
+                          <TableCell>₹{Math.floor(Number(course.price)).toLocaleString('en-IN')}</TableCell>
                           <TableCell>{course.lessons?.length || 0}</TableCell>
                           <TableCell className="text-right">
                             <Button 

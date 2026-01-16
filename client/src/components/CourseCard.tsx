@@ -33,7 +33,7 @@ export function CourseCard({ course }: CourseCardProps) {
             {course.difficulty}
           </Badge>
           <span className="font-bold text-lg text-primary">
-            ₹{Number(course.price).toLocaleString('en-IN')}
+            ₹{Math.floor(Number(course.price)).toLocaleString('en-IN')}
           </span>
         </div>
         <h3 className="font-display font-bold text-xl leading-tight line-clamp-2 group-hover:text-primary transition-colors">
