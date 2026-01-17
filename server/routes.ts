@@ -218,7 +218,7 @@ async function seedDatabase() {
       title: "Full Stack React & Node",
       slug: "full-stack-react-node",
       description: "Learn to build modern web applications from scratch.",
-      price: "15999",
+      price: "49999",
       category: "Development",
       difficulty: "Intermediate",
       thumbnailUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80"
@@ -231,7 +231,7 @@ async function seedDatabase() {
       title: "Advanced TypeScript Patterns",
       slug: "advanced-typescript",
       description: "Master generic types, utility types, and advanced architectural patterns for large-scale applications.",
-      price: "12999",
+      price: "34999",
       category: "Development",
       difficulty: "Advanced",
       thumbnailUrl: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80"
@@ -244,7 +244,7 @@ async function seedDatabase() {
       title: "UI/UX Design Fundamentals",
       slug: "ui-ux-fundamentals",
       description: "The essential guide to modern interface design, accessibility, and user experience.",
-      price: "8499",
+      price: "24999",
       category: "Design",
       difficulty: "Beginner",
       thumbnailUrl: "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?w=800&q=80"
@@ -257,7 +257,7 @@ async function seedDatabase() {
       title: "Mastering Tailwind CSS",
       slug: "mastering-tailwind",
       description: "Build beautiful, responsive layouts at lightning speed with utility-first CSS.",
-      price: "5999",
+      price: "19999",
       category: "Design",
       difficulty: "Intermediate",
       thumbnailUrl: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&q=80"
