@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Navbar } from "@/components/Navbar";
 import { AuthGuard } from "@/components/AuthGuard";
 import { useEffect } from "react";
+import Profile from "@/pages/Profile";
 
 // Pages
 import Home from "@/pages/Home";
@@ -33,7 +34,8 @@ function Router() {
           <Route path="/courses/:slug" component={CourseDetail} />
           <Route path="/login" component={Auth} />
           <Route path="/signup" component={Auth} />
-          
+          <Route path="/profile" component={Profile} />
+
           <Route path="/dashboard">
             <AuthGuard>
               <Dashboard />
