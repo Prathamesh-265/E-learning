@@ -130,7 +130,7 @@ export async function registerRoutes(
   app.post(api.courses.create.path, authenticateToken, isAdmin, async (req, res) => {
     try {
       const input = api.courses.create.input.parse(req.body);
-      const { lessons, ...courseData } = input;
+      const { lessons, ...courseData } = input as any;
       const course = await storage.createCourse(courseData, lessons);
       res.status(201).json(course);
     } catch (err) {

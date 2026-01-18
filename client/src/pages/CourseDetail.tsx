@@ -14,16 +14,18 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+const FALLBACK_IMG =
+  "https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=1200&q=80";
+
 export default function CourseDetail() {
   const [match, params] = useRoute("/courses/:slug");
   const slug = params?.slug || "";
-  
+
   const { data: course, isLoading } = useCourse(slug);
   const { mutate: enroll, isPending: isEnrolling } = useEnroll();
   const { user } = useAuth();
-  
-  // Safely check enrollment status if user exists
-  const isEnrolled = false; // We would check this against fetched enrollments or a property on the course response
+
+  const isEnrolled = false;
 
   if (isLoading) {
     return (
@@ -44,6 +46,11 @@ export default function CourseDetail() {
     );
   }
 
+  const safeThumbnail =
+    course.thumbnailUrl && course.thumbnailUrl.trim().length > 0
+      ? course.thumbnailUrl
+      : FALLBACK_IMG;
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Header */}
@@ -59,19 +66,21 @@ export default function CourseDetail() {
                 {course.difficulty}
               </Badge>
             </div>
-            
+
             <h1 className="font-display font-bold text-3xl md:text-5xl mb-6 leading-tight">
               {course.title}
             </h1>
-            
+
             <p className="text-lg text-slate-300 mb-8 max-w-2xl leading-relaxed">
               {course.description}
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
               <div className="flex items-center gap-2 text-sm text-slate-300">
                 <Clock className="w-4 h-4" />
-                <span>Last updated {new Date(course.createdAt || "").toLocaleDateString()}</span>
+                <span>
+                  Last updated {new Date(course.createdAt || "").toLocaleDateString()}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-sm text-slate-300">
                 <Award className="w-4 h-4" />
@@ -93,7 +102,9 @@ export default function CourseDetail() {
                   {[1, 2, 3, 4].map((_, i) => (
                     <div key={i} className="flex gap-2 items-start">
                       <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                      <span className="text-sm text-muted-foreground">Master the fundamental concepts and advanced techniques in this field.</span>
+                      <span className="text-sm text-muted-foreground">
+                        Master the fundamental concepts and advanced techniques in this field.
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -102,11 +113,26 @@ export default function CourseDetail() {
 
             <Tabs defaultValue="curriculum">
               <TabsList className="w-full justify-start h-12 bg-transparent border-b rounded-none p-0 mb-6">
-                <TabsTrigger value="curriculum" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 text-base">Curriculum</TabsTrigger>
-                <TabsTrigger value="instructor" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 text-base">Instructor</TabsTrigger>
-                <TabsTrigger value="reviews" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 text-base">Reviews</TabsTrigger>
+                <TabsTrigger
+                  value="curriculum"
+                  className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 text-base"
+                >
+                  Curriculum
+                </TabsTrigger>
+                <TabsTrigger
+                  value="instructor"
+                  className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 text-base"
+                >
+                  Instructor
+                </TabsTrigger>
+                <TabsTrigger
+                  value="reviews"
+                  className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-6 text-base"
+                >
+                  Reviews
+                </TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="curriculum">
                 <div className="border rounded-xl overflow-hidden">
                   <Accordion type="single" collapsible className="w-full">
@@ -116,19 +142,30 @@ export default function CourseDetail() {
                       </AccordionTrigger>
                       <AccordionContent className="p-0">
                         {course.lessons?.map((lesson, idx) => (
-                          <div key={lesson.id} className="flex items-center justify-between p-4 border-t px-6 hover:bg-muted/30 transition-colors">
+                          <div
+                            key={lesson.id}
+                            className="flex items-center justify-between p-4 border-t px-6 hover:bg-muted/30 transition-colors"
+                          >
                             <div className="flex items-center gap-3">
                               <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold">
                                 {idx + 1}
                               </div>
                               <div className="flex flex-col">
-                                <span className="font-medium text-sm text-foreground">{lesson.title}</span>
-                                <span className="text-xs text-muted-foreground">Video • 10 mins</span>
+                                <span className="font-medium text-sm text-foreground">
+                                  {lesson.title}
+                                </span>
+                                <span className="text-xs text-muted-foreground">
+                                  Video • 10 mins
+                                </span>
                               </div>
                             </div>
                             {isEnrolled ? (
                               <Link href={`/learn/${course.slug}/${lesson.id}`}>
-                                <Button size="sm" variant="ghost" className="text-primary hover:text-primary/80">
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="text-primary hover:text-primary/80"
+                                >
                                   <PlayCircle className="w-4 h-4 mr-2" />
                                   Play
                                 </Button>
@@ -143,10 +180,12 @@ export default function CourseDetail() {
                   </Accordion>
                 </div>
               </TabsContent>
-              
+
               <TabsContent value="instructor">
                 <div className="p-6 border rounded-xl bg-card">
-                  <p className="text-muted-foreground">Instructor details would appear here.</p>
+                  <p className="text-muted-foreground">
+                    Instructor details would appear here.
+                  </p>
                 </div>
               </TabsContent>
             </Tabs>
@@ -156,28 +195,35 @@ export default function CourseDetail() {
           <div className="relative">
             <Card className="sticky top-24 overflow-hidden shadow-lg border-border/60">
               <div className="aspect-video bg-muted relative">
-                {course.thumbnailUrl && (
-                  <img 
-                    src={course.thumbnailUrl} 
-                    alt={course.title}
-                    className="w-full h-full object-cover" 
-                  />
-                )}
+                <img
+                  src={safeThumbnail}
+                  alt={course.title}
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  draggable={false}
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    if (img.src !== FALLBACK_IMG) img.src = FALLBACK_IMG;
+                  }}
+                />
+
                 {!isEnrolled && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
                     <PlayCircle className="w-16 h-16 text-white/80" />
                   </div>
                 )}
               </div>
-              
+
               <CardContent className="p-6">
                 <div className="text-3xl font-bold mb-6 flex items-baseline gap-2">
-                  ₹{Math.floor(Number(course.price)).toLocaleString('en-IN')}
+                  ₹{Math.floor(Number(course.price)).toLocaleString("en-IN")}
                   <span className="text-base font-normal text-muted-foreground line-through">
-                    ₹{Math.floor(Number(course.price) * 1.5).toLocaleString('en-IN')}
+                    ₹{Math.floor(Number(course.price) * 1.5).toLocaleString("en-IN")}
                   </span>
                 </div>
-                
+
                 {user ? (
                   isEnrolled ? (
                     <Link href={`/dashboard`}>
@@ -186,7 +232,7 @@ export default function CourseDetail() {
                       </Button>
                     </Link>
                   ) : (
-                    <Button 
+                    <Button
                       className="w-full h-12 text-lg font-semibold mb-4 shadow-lg shadow-primary/25"
                       onClick={() => enroll(course.id)}
                       disabled={isEnrolling}
@@ -201,11 +247,11 @@ export default function CourseDetail() {
                     </Button>
                   </Link>
                 )}
-                
+
                 <p className="text-xs text-center text-muted-foreground mb-6">
                   30-Day Money-Back Guarantee
                 </p>
-                
+
                 <div className="space-y-4">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Access</span>
